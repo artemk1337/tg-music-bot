@@ -15,8 +15,8 @@ import (
 )
 
 type configuration struct {
-	tgToken string `envconfig:"tg_token" required:"true"`
-	yaToken string `envconfig:"YATOKEN" required:"true"`
+	tgToken string `envconfig:"TG_TOKEN" required:"true"`
+	yaToken string `envconfig:"YA_TOKEN" required:"true"`
 
 	tracksLimit int  `envconfig:"TRACKS_LIMIT" default:"10"`
 	cacheTTL    int  `envconfig:"CACHE_TTL" default:"60"` // minutes
