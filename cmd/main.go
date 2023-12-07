@@ -15,12 +15,12 @@ import (
 )
 
 type configuration struct {
-	tgToken string `envconfig:"TG_TOKEN" required:"true"`
-	yaToken string `envconfig:"YA_TOKEN" required:"true"`
+	TgToken string `envconfig:"TG_TOKEN" required:"true" default:"966549792:AAEW2fJH7DMRYydCpqDyfvJ6epyO1IGAmOk"`
+	YaToken string `envconfig:"YA_TOKEN" required:"true" default:"AQAAAAAi5-PqAAG8Xi6q5GuvEU8Mn9BuFAycw2g"`
 
-	tracksLimit int  `envconfig:"TRACKS_LIMIT" default:"10"`
-	cacheTTL    int  `envconfig:"CACHE_TTL" default:"60"` // minutes
-	debug       bool `envconfig:"DEBUG" default:"false"`
+	TracksLimit int  `envconfig:"TRACKS_LIMIT" default:"10"`
+	CacheTTL    int  `envconfig:"CACHE_TTL" default:"60"` // minutes
+	Debug       bool `envconfig:"DEBUG" default:"false"`
 }
 
 func main() {
@@ -28,13 +28,13 @@ func main() {
 
 	ctx, _ := signal.NotifyContext(context.Background(), os.Interrupt)
 
-	if err := envconfig.Process("", &cfg); err != nil {
+	if err := envconfig.Process("tg_bot", &cfg); err != nil {
 		println(err)
 		os.Exit(1)
 	}
 
-	yaClient := yamusic.NewService(cfg.yaToken)
-	tgClient := tg.NewService(yaClient, cfg.tgToken, cfg.tracksLimit, cfg.cacheTTL, cfg.debug)
+	yaClient := yamusic.NewService(cfg.YaToken)
+	tgClient := tg.NewService(yaClient, cfg.TgToken, cfg.TracksLimit, cfg.CacheTTL, cfg.Debug)
 
 	wg := sync.WaitGroup{}
 	startServices(ctx, &wg, tgClient, yaClient)
