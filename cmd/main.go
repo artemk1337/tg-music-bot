@@ -18,9 +18,9 @@ type configuration struct {
 	TgToken string `envconfig:"TG_TOKEN" required:"true" default:"966549792:AAEW2fJH7DMRYydCpqDyfvJ6epyO1IGAmOk"`
 	YaToken string `envconfig:"YA_TOKEN" required:"true" default:"AQAAAAAi5-PqAAG8Xi6q5GuvEU8Mn9BuFAycw2g"`
 
-	TracksLimit int  `envconfig:"TRACKS_LIMIT" default:"10"`
-	CacheTTL    int  `envconfig:"CACHE_TTL" default:"60"` // minutes
-	Debug       bool `envconfig:"DEBUG" default:"false"`
+	TracksLimit int           `envconfig:"TRACKS_LIMIT" default:"10"`
+	CacheTTL    time.Duration `envconfig:"CACHE_TTL" default:"60m"`
+	Debug       bool          `envconfig:"DEBUG" default:"false"`
 }
 
 func main() {

@@ -24,7 +24,7 @@ type service struct {
 	tgToken string
 
 	tracksLimit int
-	cacheTTL    int // minutes
+	cacheTTL    time.Duration
 	debug       bool
 
 	yaMusic yaMusicService
@@ -84,7 +84,7 @@ func (s *service) parseInlineQuery(ctx context.Context, bot *tgbotapi.BotAPI, up
 	inlineConf := tgbotapi.InlineConfig{
 		InlineQueryID: update.InlineQuery.ID,
 		IsPersonal:    true,
-		CacheTime:     s.cacheTTL,
+		CacheTime:     int(s.cacheTTL.Minutes()),
 		Results:       results,
 	}
 
@@ -170,7 +170,7 @@ func NewService(
 	yaMusic yaMusicService,
 	tgToken string,
 	tracksLimit int,
-	cacheTTL int,
+	cacheTTL time.Duration,
 	debug bool,
 ) Service {
 	return &service{
